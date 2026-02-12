@@ -1,2 +1,6 @@
 server:
   port: 8099
+
+building:
+  floors: 10
+  elevators: 2
