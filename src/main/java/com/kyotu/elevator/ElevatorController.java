@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/elevators")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class ElevatorController {
+
+	private static final String ELEVATORS_ENDPOINT = "/elevators";
 
 	private final ElevatorFacade elevatorFacade;
 
@@ -22,7 +24,7 @@ class ElevatorController {
 		return ResponseEntity.ok(elevatorFacade.getBuildingConfig());
 	}
 
-	@GetMapping
+	@GetMapping(ELEVATORS_ENDPOINT)
 	ResponseEntity<List<ElevatorStateDto>> getAllElevators() {
 		return ResponseEntity.ok(elevatorFacade.getAllElevatorStates());
 	}
