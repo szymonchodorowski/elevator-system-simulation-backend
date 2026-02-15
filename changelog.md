@@ -1,5 +1,9 @@
 ## changelog for elevator-system-simulation-backend
 
+## 0.0.5
+- Add elevator actions
+- Prepare tests
+
 ## 0.0.4
 - Add SseEmitter to project
 

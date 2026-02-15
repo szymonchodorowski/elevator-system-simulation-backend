@@ -2,11 +2,12 @@ package com.kyotu.elevator;
 
 import com.kyotu.elevator.dto.BuildingConfigDto;
 import com.kyotu.elevator.dto.ElevatorStateDto;
+import com.kyotu.elevator.request.ElevatorCallRequest;
+import com.kyotu.elevator.request.HallCallRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
@@ -33,5 +34,18 @@ class ElevatorController {
 	@GetMapping(value = ELEVATORS_ENDPOINT + "/stream", produces = "text/event-stream")
 	SseEmitter streamElevators() {
 		return elevatorFacade.subscribe();
+	}
+
+	@PostMapping(ELEVATORS_ENDPOINT + "/call")
+	ResponseEntity<Void> callElevator(@Valid @RequestBody HallCallRequest request) {
+		elevatorFacade.callElevator(request);
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping(ELEVATORS_ENDPOINT + "/{id}/floor")
+	ResponseEntity<Void> selectFloor(@PathVariable int id,
+	                                 @Valid @RequestBody ElevatorCallRequest request) {
+		elevatorFacade.selectFloor(id, request);
+		return ResponseEntity.ok().build();
 	}
 }

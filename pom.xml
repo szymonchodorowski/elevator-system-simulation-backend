@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.kyotu</groupId>
 	<artifactId>elevator</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<name>Elevator</name>
 	<description>BE for Elevator System Simulation</description>
 	<url/>
