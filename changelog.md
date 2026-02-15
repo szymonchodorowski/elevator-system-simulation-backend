@@ -1,5 +1,8 @@
 ## changelog for elevator-system-simulation-backend
 
+## 0.0.4
+- Add SseEmitter to project
+
 ## 0.0.3
 - Add movement simulation
 

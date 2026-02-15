@@ -1,5 +1,6 @@
 package com.kyotu.elevator;
 
+import com.kyotu.elevator.dto.ElevatorStateDto;
 import com.kyotu.elevator.enums.Direction;
 import com.kyotu.elevator.enums.DoorStatus;
 import jakarta.annotation.PostConstruct;
@@ -7,6 +8,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,7 @@ class ElevatorScheduler {
 
 	private final Building building;
 	private final ElevatorConfig config;
+	private final ElevatorService elevatorService;
 	private ScheduledExecutorService executor;
 
 	@PostConstruct
@@ -36,6 +39,7 @@ class ElevatorScheduler {
 		for (Elevator elevator : building.getElevators()) {
 			tick(elevator);
 		}
+		broadcastState();
 	}
 
 	private void tick(Elevator elevator) {
@@ -105,5 +109,12 @@ class ElevatorScheduler {
 		} else {
 			elevator.moveDown();
 		}
+	}
+
+	private void broadcastState() {
+		List<ElevatorStateDto> states = building.getElevators().stream()
+				.map(ElevatorMapper::toDto)
+				.toList();
+		elevatorService.broadcast(states);
 	}
 }

@@ -4,6 +4,7 @@ import com.kyotu.elevator.dto.BuildingConfigDto;
 import com.kyotu.elevator.dto.ElevatorStateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class ElevatorFacade {
 
 	private final Building building;
+	private final ElevatorService elevatorService;
 
 	public BuildingConfigDto getBuildingConfig() {
 		return new BuildingConfigDto(
@@ -22,17 +24,11 @@ public class ElevatorFacade {
 
 	public List<ElevatorStateDto> getAllElevatorStates() {
 		return building.getElevators().stream()
-				.map(this::toDto)
+				.map(ElevatorMapper::toDto)
 				.toList();
 	}
 
-	private ElevatorStateDto toDto(Elevator elevator) {
-		return new ElevatorStateDto(
-				elevator.getId(),
-				elevator.getCurrentFloor(),
-				elevator.getDirection(),
-				elevator.getDoorStatus(),
-				elevator.getTargetFloors()
-		);
+	public SseEmitter subscribe() {
+		return elevatorService.subscribe();
 	}
 }
