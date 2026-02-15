@@ -4,3 +4,7 @@ server:
 building:
   floors: 10
   elevators: 2
+
+elevator:
+  tick-ms: 1000
+  door-open-ticks: 3

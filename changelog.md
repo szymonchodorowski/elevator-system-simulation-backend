@@ -1,5 +1,8 @@
 ## changelog for elevator-system-simulation-backend
 
+## 0.0.3
+- Add movement simulation
+
 ## 0.0.2
 - Move building endpoint to /building
 

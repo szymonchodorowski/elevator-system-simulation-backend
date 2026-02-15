@@ -1,6 +1,6 @@
 package com.kyotu.elevator.request;
 
-import com.kyotu.elevator.Direction;
+import com.kyotu.elevator.enums.Direction;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 

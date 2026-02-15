@@ -1,7 +1,7 @@
 package com.kyotu.elevator.dto;
 
-import com.kyotu.elevator.Direction;
-import com.kyotu.elevator.DoorStatus;
+import com.kyotu.elevator.enums.Direction;
+import com.kyotu.elevator.enums.DoorStatus;
 
 import java.util.Set;
 
