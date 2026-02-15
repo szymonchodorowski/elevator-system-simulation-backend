@@ -34,14 +34,16 @@ public class ElevatorFacade {
 	}
 
 	public SseEmitter subscribe() {
-		return elevatorService.subscribe();
+		var initialState = getAllElevatorStates();
+		return elevatorService.subscribe(initialState);
 	}
 
-	public void callElevator(HallCallRequest request) {
+	public int callElevator(HallCallRequest request) {
 		validateFloor(request.floor());
-		var hallCall = new HallCall(request.floor(), request.direction());
-		var elevator = elevatorSelector.select(building.getElevators(), hallCall);
+		HallCall hallCall = new HallCall(request.floor(), request.direction());
+		Elevator elevator = elevatorSelector.select(building.getElevators(), hallCall);
 		elevator.addTargetFloor(request.floor());
+		return elevator.getId();
 	}
 
 	public void selectFloor(int elevatorId, ElevatorCallRequest request) {

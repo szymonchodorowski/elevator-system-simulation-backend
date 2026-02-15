@@ -6,6 +6,7 @@ import com.kyotu.elevator.enums.DoorStatus;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 class ElevatorScheduler {
@@ -36,10 +38,14 @@ class ElevatorScheduler {
 	}
 
 	private void tickAll() {
-		for (Elevator elevator : building.getElevators()) {
-			tick(elevator);
+		try {
+			for (Elevator elevator : building.getElevators()) {
+				tick(elevator);
+			}
+			broadcastState();
+		} catch (Exception e) {
+			log.error("Scheduler tick failed", e);
 		}
-		broadcastState();
 	}
 
 	private void tick(Elevator elevator) {

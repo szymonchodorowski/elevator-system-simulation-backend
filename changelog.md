@@ -1,5 +1,9 @@
 ## changelog for elevator-system-simulation-backend
 
+## 1.0.0
+- Return id of called elevator
+- Prepare version 1.0.0
+
 ## 0.0.5
 - Add elevator actions
 - Prepare tests

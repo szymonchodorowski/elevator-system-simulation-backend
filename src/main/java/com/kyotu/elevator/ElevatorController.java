@@ -37,9 +37,9 @@ class ElevatorController {
 	}
 
 	@PostMapping(ELEVATORS_ENDPOINT + "/call")
-	ResponseEntity<Void> callElevator(@Valid @RequestBody HallCallRequest request) {
-		elevatorFacade.callElevator(request);
-		return ResponseEntity.ok().build();
+	ResponseEntity<Integer> callElevator(@Valid @RequestBody HallCallRequest request) {
+		var elevatorId = elevatorFacade.callElevator(request);
+		return ResponseEntity.ok().body(elevatorId);
 	}
 
 	@PostMapping(ELEVATORS_ENDPOINT + "/{id}/floor")

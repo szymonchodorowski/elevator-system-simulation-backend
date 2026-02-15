@@ -15,12 +15,22 @@ class ElevatorService {
 
 	private final List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
-	SseEmitter subscribe() {
+	SseEmitter subscribe(List<ElevatorStateDto> initialState) {
 		SseEmitter emitter = new SseEmitter(0L);
 		emitters.add(emitter);
 		emitter.onCompletion(() -> emitters.remove(emitter));
 		emitter.onTimeout(() -> emitters.remove(emitter));
 		emitter.onError(e -> emitters.remove(emitter));
+
+		try {
+			emitter.send(SseEmitter.event()
+					.name("elevator-update")
+					.data(initialState));
+		} catch (IOException e) {
+			emitter.complete();
+			emitters.remove(emitter);
+		}
+
 		return emitter;
 	}
 
